@@ -14,6 +14,12 @@ import {
 } from 'react-native';
 
 import {
+  Cell,
+  Section,
+  TableView,
+} from 'react-native-tableview-simple';
+
+import {
   Header,
   LearnMoreLinks,
   Colors,
@@ -78,14 +84,19 @@ class App extends React.PureComponent {
 
   renderRow = ({ item }) => {
     return (
-      <TouchableOpacity style={{ flexDirection: "column", margin: 5, padding: 5, backgroundColor: '#1ACAFE', borderRadius: 5 }}
+      <Cell 
+      cellContentView={
+        <TouchableOpacity style={{ flexDirection: "row", margin: 5, padding: 5, backgroundColor: '#1ACAFE', borderRadius: 5 }}
         onPress={() => Alert.alert('', JSON.stringify(item))}
       >
-        <Text style={styles.itemstyle}>{'Title : ' + item.title}</Text>
-        <Text style={styles.itemstyle}>{'Author : ' + item.author}</Text>
-        <Text style={styles.itemstyle}>{'URL : ' + item.url}</Text>
-        <Text style={styles.itemstyle}>{'Created At : ' + item.created_at}</Text>
+        <Text style={styles.itemstyle}>{item.title}</Text>
+        <Text style={styles.itemstyle}>{item.author}</Text>
+        <Text style={styles.itemstyle}>{item.url}</Text>
+        <Text style={styles.itemstyle}>{item.created_at}</Text>
       </TouchableOpacity>
+      }
+      />
+     
     )
   }
 
@@ -215,7 +226,18 @@ class App extends React.PureComponent {
           </TouchableOpacity> */}
         </View>
 
-        <FlatList
+        {/* <TableView style={{flex:1}}>
+          <Section> */}
+           <View style={{ flexDirection: "row", margin: 5, padding: 5, backgroundColor: '#1ACAFE', borderRadius: 5 }}
+        onPress={() => Alert.alert('', JSON.stringify(item))}
+      >
+        <Text style={styles.itemstyle}>Title</Text>
+        <Text style={styles.itemstyle}>Author</Text>
+        <Text style={styles.itemstyle}>URL</Text>
+        <Text style={styles.itemstyle}>Created At</Text>
+      </View>
+
+          <FlatList
           keyExtractor={(item, index) => index}
           ref={ref => this.flatList = ref}
           data={this.state.searched_data == ''? this.state.api_data:this.state.searched_data}
@@ -226,6 +248,11 @@ class App extends React.PureComponent {
         // onMomentumScrollEnd={()=>this.listEndReached()}
         />
 
+          {/* </Section>
+        </TableView> */}
+
+        
+
       </View>
     )
   }
@@ -235,7 +262,8 @@ const styles = StyleSheet.create({
   itemstyle: {
     margin: 2,
     color: '#ffffff',
-    fontSize: 18
+    fontSize: 18,
+    flex:1
   },
   scrollView: {
     backgroundColor: Colors.lighter,
